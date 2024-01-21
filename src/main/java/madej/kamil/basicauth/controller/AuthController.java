@@ -1,27 +1,32 @@
 package madej.kamil.basicauth.controller;
 
-import madej.kamil.basicauth.model.User;
-import madej.kamil.basicauth.service.UserService;
+import madej.kamil.basicauth.model.UserLogin;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    public AuthController(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping
-    public ResponseEntity<String> login(@RequestBody User user) {
-        long id = userService.login(user);
-
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserLogin userLogin) {
+        Authentication authenticationRequest = UsernamePasswordAuthenticationToken
+                .unauthenticated(userLogin.username(), userLogin.password());
+        
+        Authentication authenticationResponse = authenticationManager
+                .authenticate(authenticationRequest);
         return null;
     }
 }
