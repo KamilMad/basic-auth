@@ -15,24 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final AuthenticationManager authenticationManager;
 
-
-    public long login(UserLogin userLogin) {
-
-        User user = findByUsername(userLogin.username());
-
-        Authentication authenticationRequest = new UsernamePasswordAuthenticationToken(
-                userLogin.username(), userLogin.password());
-
-        Authentication authenticationResponse = authenticationManager.authenticate(authenticationRequest);
-
-        SecurityContextHolder.getContext().setAuthentication(authenticationResponse);
-
-        u
-
-        return user.getId();
-    }
 
     private User findByUsername(String username) {
         return userRepository.findByUsername(username)

@@ -1,8 +1,5 @@
 package madej.kamil.basicauth.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,15 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/home")
 public class HomeController {
 
-    @GetMapping("/helloworld")
-    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/Auth")
     public String helloWorld() {
+        return "Hello authenticated user";
+    }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated()){
-            return "Hello " + authentication.getName();
-        }
-        else
-            return "User is not authenticated";
+    @GetMapping("/noAuth")
+    public String noAuthHello() {
+        return "Hello unauthenticated user";
     }
 }

@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
+@Component
 @Entity(name = "users")
 @RequiredArgsConstructor
 @Getter
@@ -21,9 +23,6 @@ public class User {
     private String username;
 
     private String password;
-
-    private boolean isEnabled;
-
 
 
 }
